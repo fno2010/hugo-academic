@@ -63,6 +63,10 @@
   version = "4.1.1"
   sri = "sha256-pB/deHc9CGfFpJRjC43imB29Rse8tak+5eXqntO94ck="
   url = "https://cdnjs.cloudflare.com/ajax/libs/anchor-js/%s/anchor.min.js"
+[js.bibtexjs]
+  version = "2e6098d"
+  sri = "sha512-5Uva6bJJnCoMS5S/gAcJ0f3kCiMxvmhLwJIQ+UST+TCv5x90yIjfXswxrHFtsgsuUqw/wLsP74ny77GShJB1qw=="
+  url = "https://cdn.rawgit.com/pcooksey/bibtex-js/%s/src/bibtex_js.js"
 
 # CSS
 

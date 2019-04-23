@@ -29,6 +29,11 @@
       {{ if or .Params.math .Site.Params.math }}
       {{ printf "<script src=\"%s\" integrity=\"%s\" crossorigin=\"anonymous\" async></script>" (printf $js.mathJax.url $js.mathJax.version) $js.mathJax.sri | safeHTML }}
       {{ end }}
+
+      {{/* Bibtex rendering. */}}
+      {{ if or .Params.bibtex .Site.Params.bibtex }}
+      {{ printf "<script src=\"%s\" integrity=\"%s\" crossorigin=\"anonymous\" async></script>" (printf $js.bibtexjs.url $js.bibtexjs.version) $js.bibtexjs.sri | safeHTML }}
+      {{ end }}
     {{ end }}
 
     {{/* Maps JS. */}}
@@ -76,6 +81,60 @@
     <script>
       anchors.add();
     </script>
+    {{ end }}
+
+    {{/* Bibtex rendering template. */}}
+    {{ if or .Params.bibtex .Site.Params.bibtex }}
+    {{ $references := .Resources.Match "*.bib" }}
+    {{ range $ref := $references }}
+    <bibtex src="{{ $ref.RelPermalink }}"></bibtex>
+    {{ end }}
+    {{ with .Params.references }}
+    {{ range $ref := . }}
+    <bibtex src="{{ $ref | relURL }}"></bibtex>
+    {{ end }}
+    {{ end }}
+    {{ with .Site.Params.references }}
+    {{ range $ref := . }}
+    <bibtex src="{{ $ref | relURL }}"></bibtex>
+    {{ end }}
+    {{ end }}
+    <div class="if bibtex_template" style="display: none;">
+      <i class="far fa-file-alt pub-icon" aria-hidden="true"></i>
+      <span class="if author">
+        <span class="author article-metadata li-cite-author"></span>.
+      </span>
+      <span class="if title">
+        <span class="if !url">
+          <strong><span class="title"></span></strong>,
+        </span>
+        <span class="if url">
+          <a class="url"><strong><span class="title"></span></strong></a>,
+        </span>
+      </span>
+      <span>
+        <span class="if journal"><em><span class="journal"></span></em>,</span>
+        <span class="if booktitle">In <em><span class="booktitle"></span></em>,</span>
+        <span class="if publisher"><em><span class="publisher"></span></em>,</span>
+        <span class="if volume"><span class="volume"></span>,</span>
+        <span class="if journal number">(<span class="number"></span>),</span>
+        <span class="if pages"> pages <span class="pages"></span>,</span>
+        <span class="if month"><span class="month"></span>,</span>
+        <span class="if year"><span class="year"></span>.</span>
+        <span>
+          <button type="button" class="bibtexVar btn btn-outline-primary my-1 mr-1 btn-sm" role="button" data-toggle="collapse" href="#bib+BIBTEXKEY+" aria-expanded="false" aria-controls="bib+BIBTEXKEY+" extra="BIBTEXKEY">
+            {{ i18n "btn_cite" }}
+          </button>
+        </span>
+      </span>
+      <div class="bibtexVar collapse" id="bib+BIBTEXKEY+" extra="BIBTEXKEY">
+        <div class="well">
+          <pre><span class="bibtexraw noread"></span></pre>
+        </div>
+      </div>
+      <div style="display:none"><span class="bibtextype"></span></div>
+      <div style="display:none"><span class="if topic"><span class="topic"></span></span></div>
+    </div>
     {{ end }}
 
     {{ if eq site.Params.search.engine 1 }}
