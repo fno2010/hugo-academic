@@ -60,6 +60,7 @@
   version = "1.0.0"
   sri = ""  # No SRI as dynamically generated.
   url = "https://cdn.jsdelivr.net/gh/pcooksey/bibtex-js@%s/src/bibtex_js.min.js"
+  async = true
 [js.mermaid]
   version = "8.4.8"
   sri = "sha256-lyWCDMnMeZiXRi7Zl54sZGKYmgQs4izcT7+tKc+KUBk="
